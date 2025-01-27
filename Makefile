@@ -1,11 +1,13 @@
 .PHONY: init_broker shutdown_broker
 
 init_broker:
+	@echo $(dir $(abspath $(firstword $(MAKEFILE_LIST))))
 	@echo command | date
 	@echo Initializing Kafka broker
 	docker-compose -f docker-compose.yml up -d
 
 shutdown_broker:
+	@echo $(dir $(abspath $(firstword $(MAKEFILE_LIST))))
 	@echo command | date
 	@echo Shutting down kafka broker
 	docker-compose -f docker-compose.yml down
