@@ -13,15 +13,18 @@ public class ConfluentAvroSerializer : ISerializer
 {
     private readonly ISchemaRegistryClient _schemaRegistryClient;
     private readonly AvroSerializerConfig _serializerConfig;
+    private readonly RuleRegistry _ruleRegistry;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="ConfluentAvroSerializer"/> class.
     /// </summary>
     /// <param name="resolver">The <see cref="IDependencyResolver"/> to be used by the framework</param>
     /// <param name="serializerConfig">Avro serializer configuration</param>
+    /// <param name="ruleRegistry">An instance of <see cref="RuleRegistry"/>.</param>
     public ConfluentAvroSerializer(
         IDependencyResolver resolver,
-        AvroSerializerConfig serializerConfig = null)
+        AvroSerializerConfig serializerConfig = null,
+        RuleRegistry ruleRegistry = null)
     {
         _schemaRegistryClient =
             resolver.Resolve<ISchemaRegistryClient>() ??
@@ -29,6 +32,7 @@ public class ConfluentAvroSerializer : ISerializer
                 $"No schema registry configuration was found. Set it using {nameof(ClusterConfigurationBuilderExtensions.WithSchemaRegistry)} on cluster configuration");
 
         _serializerConfig = serializerConfig;
+        _ruleRegistry = ruleRegistry;
     }
 
     /// <inheritdoc/>
@@ -40,7 +44,8 @@ public class ConfluentAvroSerializer : ISerializer
                 () => Activator.CreateInstance(
                     typeof(AvroSerializer<>).MakeGenericType(message.GetType()),
                     _schemaRegistryClient,
-                    _serializerConfig))
+                    _serializerConfig,
+                    _ruleRegistry))
             .SerializeAsync(message, output, context);
     }
 }
