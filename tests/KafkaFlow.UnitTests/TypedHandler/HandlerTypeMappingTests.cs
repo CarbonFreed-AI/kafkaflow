@@ -26,9 +26,10 @@ public class HandlerTypeMappingTests
         // Assert
         _target.GetHandlersTypes(typeof(int))
             .Should()
-            .BeEquivalentTo(
+            .BeEquivalentTo([
                 typeof(string),
                 typeof(double),
-                typeof(bool));
+                typeof(bool)
+            ]);
     }
 }

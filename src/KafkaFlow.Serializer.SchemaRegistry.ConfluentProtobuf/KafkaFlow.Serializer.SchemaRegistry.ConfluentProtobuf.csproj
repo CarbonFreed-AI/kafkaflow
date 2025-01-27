@@ -8,7 +8,13 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Confluent.SchemaRegistry.Serdes.Protobuf" Version="1.9.3" />
+        <PackageReference Include="Confluent.SchemaRegistry.Serdes.Protobuf" Version="2.8.0" />
+        <PackageReference Update="Microsoft.SourceLink.GitHub" Version="8.0.0" />
+        <PackageReference Include="Google.Protobuf" Version="3.29.3">
+            <Aliases>GoogleProto</Aliases>
+        </PackageReference>
+        <PackageReference Include="protobuf-net.Core" Version="3.2.46" />
+        <PackageReference Include="protobuf-net.Reflection" Version="3.2.46" />
     </ItemGroup>
 
     <ItemGroup>
