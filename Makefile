@@ -1,6 +1,6 @@
 .PHONY: init_broker shutdown_broker
 
-init_broker:	
+init_broker:
 	@echo command | date
 	@echo Initializing Kafka broker
 	docker-compose -f docker-compose.yml up -d
@@ -23,6 +23,7 @@ unit_tests:
 	dotnet test tests/KafkaFlow.UnitTests/KafkaFlow.UnitTests.csproj --framework net9.0 --logger "console;verbosity=detailed"
 
 integration_tests:
+	@echo $(dir $(abspath $(firstword $(MAKEFILE_LIST))))
 	@echo command | date
 	make init_broker
 	@echo Running integration tests
