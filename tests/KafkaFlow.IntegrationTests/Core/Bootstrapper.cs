@@ -176,7 +176,7 @@ internal static class Bootstrapper
                                                 {
                                                     AutoRegisterSchemas = true,
                                                     SubjectNameStrategy = SubjectNameStrategy.Record,
-                                                }))))
+                                                }, null, null))))
                         .AddConsumer(
                             consumer => consumer
                                 .Topic(JsonSchemaRegistryTopicName)

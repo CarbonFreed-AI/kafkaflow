@@ -22,7 +22,7 @@ public static class ProducerConfigurationBuilderExtensions
         JsonSerializerConfig config = null)
     {
         return middlewares.AddSerializer(
-            resolver => new ConfluentJsonSerializer(resolver, config),
+            resolver => new ConfluentJsonSerializer(resolver, config, null),
             _ => new SingleMessageTypeResolver(typeof(TMessage)));
     }
 }
