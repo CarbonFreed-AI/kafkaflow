@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>netstandard2.0</TargetFramework>
+        <TargetFramework>net9.0</TargetFramework>
         <PackageId>KafkaFlow.Serializer.ProtobufNet</PackageId>
         <Description>Protobuf implementation for KafkaFlow serializer middleware using protobuf-net</Description>
         <RootNamespace>KafkaFlow.Serializer</RootNamespace>
