@@ -1,8 +1,10 @@
+extern alias GoogleProto;
+
 using System.Linq;
 using System.Threading.Tasks;
 using Confluent.SchemaRegistry;
-using Google.Protobuf;
-using Google.Protobuf.Reflection;
+using GoogleProto::Google.Protobuf;
+using FileDescriptorProto = GoogleProto::Google.Protobuf.Reflection.FileDescriptorProto;
 
 namespace KafkaFlow;
 

@@ -13,13 +13,15 @@ public class ConfluentProtobufSerializer : ISerializer
 {
     private readonly ISchemaRegistryClient _schemaRegistryClient;
     private readonly ProtobufSerializerConfig _serializerConfig;
+    private readonly RuleRegistry _ruleRegistry;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="ConfluentProtobufSerializer"/> class.
     /// </summary>
     /// <param name="resolver">An instance of <see cref="IDependencyResolver"/></param>
     /// <param name="serializerConfig">An instance of <see cref="ProtobufSerializerConfig"/></param>
-    public ConfluentProtobufSerializer(IDependencyResolver resolver, ProtobufSerializerConfig serializerConfig = null)
+    /// <param name="ruleRegistry">An instance of <see cref="RuleRegistry"/>.</param>
+    public ConfluentProtobufSerializer(IDependencyResolver resolver, ProtobufSerializerConfig serializerConfig = null, RuleRegistry ruleRegistry = null)
     {
         _schemaRegistryClient =
             resolver.Resolve<ISchemaRegistryClient>() ??
@@ -27,6 +29,7 @@ public class ConfluentProtobufSerializer : ISerializer
                 $"No schema registry configuration was found. Set it using {nameof(ClusterConfigurationBuilderExtensions.WithSchemaRegistry)} on cluster configuration");
 
         _serializerConfig = serializerConfig;
+        _ruleRegistry = ruleRegistry;
     }
 
     /// <inheritdoc/>
@@ -38,7 +41,8 @@ public class ConfluentProtobufSerializer : ISerializer
                 () => Activator.CreateInstance(
                     typeof(ProtobufSerializer<>).MakeGenericType(message.GetType()),
                     _schemaRegistryClient,
-                    _serializerConfig))
+                    _serializerConfig,
+                    _ruleRegistry))
             .SerializeAsync(message, output, context);
     }
 }

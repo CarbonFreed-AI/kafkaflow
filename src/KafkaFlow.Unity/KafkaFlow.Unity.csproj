@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>netstandard2.0</TargetFramework>
+        <TargetFramework>net9.0</TargetFramework>
         <PackageId>KafkaFlow.Unity</PackageId>
         <Description>Adapts KafkaFlow to use Unity Dependency Injection</Description>
     </PropertyGroup>
@@ -11,7 +11,8 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Unity" Version="5.11.7" />
+        <PackageReference Include="Unity" Version="5.11.10" />
+        <PackageReference Update="Microsoft.SourceLink.GitHub" Version="8.0.0" />
     </ItemGroup>
 
 </Project>

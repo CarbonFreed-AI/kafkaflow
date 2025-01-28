@@ -51,7 +51,7 @@ public abstract class ConfluentSerializerWrapper
         public override async Task SerializeAsync(object message, Stream output, ISerializerContext context)
         {
             var data = await _serializer
-                .SerializeAsync((T)message, new SerializationContext(MessageComponentType.Value, context.Topic))
+                .SerializeAsync((T)message, new SerializationContext(MessageComponentType.Value, context.Topic, new Headers()))
                 .ConfigureAwait(false);
 
             await output

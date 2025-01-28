@@ -21,9 +21,7 @@ public class JsonCoreSerializerTests
         var message = new TestMessage { Text = "Café Façade" };
         using var output = new MemoryStream();
 
-        var writerOptions = new JsonWriterOptions { Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping };
-
-        var target = new JsonCoreSerializer(writerOptions);
+        var target = new JsonCoreSerializer(new JsonSerializerOptions{Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping});
 
         // Act
         await target.SerializeAsync(message, output, _contextMock.Object);

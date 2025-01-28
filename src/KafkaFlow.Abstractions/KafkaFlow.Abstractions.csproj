@@ -1,15 +1,16 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>netstandard2.0</TargetFramework>
+        <TargetFramework>net9.0</TargetFramework>
         <RootNamespace>KafkaFlow</RootNamespace>
         <PackageId>KafkaFlow.Abstractions</PackageId>
         <Description>Contains all KafkaFlow extendable interfaces</Description>
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="System.Memory" Version="4.5.5" />
-      <PackageReference Include="System.Threading.Tasks.Extensions" Version="4.5.4" />
+      <PackageReference Include="System.Memory" Version="4.6.0" />
+      <PackageReference Include="System.Threading.Tasks.Extensions" Version="4.6.0" />
+      <PackageReference Update="Microsoft.SourceLink.GitHub" Version="8.0.0" />
     </ItemGroup>
 
 </Project>

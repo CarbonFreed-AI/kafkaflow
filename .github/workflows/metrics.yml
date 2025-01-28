@@ -4,8 +4,9 @@ on:
     inputs:
       dates:
         required: false
-  schedule:
-    - cron: '3 2 1 * *'
+        description: The time range
+#   schedule:
+#     - cron: '3 2 1 * *'
 
 permissions:
   issues: write

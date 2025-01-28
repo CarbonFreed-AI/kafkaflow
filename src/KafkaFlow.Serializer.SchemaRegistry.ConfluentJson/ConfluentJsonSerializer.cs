@@ -15,17 +15,16 @@ public class ConfluentJsonSerializer : ISerializer
     private readonly ISchemaRegistryClient _schemaRegistryClient;
     private readonly JsonSerializerConfig _serializerConfig;
     private readonly JsonSchemaGeneratorSettings _schemaGeneratorSettings;
+    private readonly RuleRegistry _ruleRegistry;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="ConfluentJsonSerializer"/> class.
     /// </summary>
-    /// <param name="resolver">An instance of <see cref="IDependencyResolver"/></param>
-    /// <param name="serializerConfig">An instance of <see cref="JsonSerializerConfig"/></param>
-    public ConfluentJsonSerializer(IDependencyResolver resolver, JsonSerializerConfig serializerConfig = null)
-        : this(
-            resolver,
-            serializerConfig,
-            null)
+    /// <param name="resolver">An instance of <see cref="IDependencyResolver"/>.</param>
+    /// <param name="serializerConfig">An instance of <see cref="JsonSerializerConfig"/>.</param>
+    /// <param name="ruleRegistry">An instance of <see cref="RuleRegistry"/>.</param>
+    public ConfluentJsonSerializer(IDependencyResolver resolver, JsonSerializerConfig serializerConfig = null, RuleRegistry ruleRegistry = null)
+        : this(resolver, serializerConfig, null, ruleRegistry)
     {
     }
 
@@ -35,18 +34,19 @@ public class ConfluentJsonSerializer : ISerializer
     /// <param name="resolver">An instance of <see cref="IDependencyResolver"/></param>
     /// <param name="serializerConfig">An instance of <see cref="JsonSerializerConfig"/></param>
     /// <param name="schemaGeneratorSettings">An instance of <see cref="JsonSchemaGeneratorSettings"/></param>
+    /// <param name="ruleRegistry">An instance of <see cref="RuleRegistry"/>.</param>
     public ConfluentJsonSerializer(
         IDependencyResolver resolver,
         JsonSerializerConfig serializerConfig,
-        JsonSchemaGeneratorSettings schemaGeneratorSettings = null)
+        JsonSchemaGeneratorSettings schemaGeneratorSettings = null,
+        RuleRegistry ruleRegistry = null)
     {
-        _schemaRegistryClient =
-            resolver.Resolve<ISchemaRegistryClient>() ??
-            throw new InvalidOperationException(
-                $"No schema registry configuration was found. Set it using {nameof(ClusterConfigurationBuilderExtensions.WithSchemaRegistry)} on cluster configuration");
-
+        _schemaRegistryClient = resolver.Resolve<ISchemaRegistryClient>() ??
+                                throw new InvalidOperationException(
+                                    $"No schema registry configuration was found. Set it using {nameof(ClusterConfigurationBuilderExtensions.WithSchemaRegistry)} on cluster configuration");
         _serializerConfig = serializerConfig;
         _schemaGeneratorSettings = schemaGeneratorSettings;
+        _ruleRegistry = ruleRegistry;
     }
 
     /// <inheritdoc/>
@@ -59,7 +59,8 @@ public class ConfluentJsonSerializer : ISerializer
                     typeof(JsonSerializer<>).MakeGenericType(message.GetType()),
                     _schemaRegistryClient,
                     _serializerConfig,
-                    _schemaGeneratorSettings))
+                    _schemaGeneratorSettings,
+                    _ruleRegistry))
             .SerializeAsync(message, output, context);
     }
 }
